@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://bbk2nn2wypxwi"]
+
+[ext_resource type="Texture2D" uid="uid://dyja4gh4hiost" path="res://assets/skybox/overcast_soil_puresky_4k.hdr" id="1_1w21t"]
+[ext_resource type="Texture2D" uid="uid://bb3nfdypkc7q6" path="res://assets/textures/xjeA6.png" id="2_q0qig"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_uu7f3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_umk8c"]
+panorama = ExtResource("1_1w21t")
+energy_multiplier = 0.15
+
+[sub_resource type="Sky" id="Sky_ul1sq"]
+sky_material = SubResource("PanoramaSkyMaterial_umk8c")
+
+[sub_resource type="Environment" id="Environment_5rtsa"]
+background_mode = 2
+sky = SubResource("Sky_ul1sq")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kv7re"]
+albedo_texture = ExtResource("2_q0qig")
+metallic = 1.0
+uv1_scale = Vector3(1, -110.845, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p0hxn"]
+
+[node name="world" type="Node3D"]
+
+[node name="map" type="Node3D" parent="."]
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_5rtsa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="env"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 667.432, -0.5, 0)
+use_collision = true
+size = Vector3(1374.86, 1, 40)
+material = SubResource("StandardMaterial3D_kv7re")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="env"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2149, 1.47229, -31.5862)
+use_collision = true
+size = Vector3(12.7075, 1, 27.645)
+material = SubResource("StandardMaterial3D_kv7re")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="env"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.745401, 4.96097, -20.6514)
+use_collision = true
+size = Vector3(12.7075, 1, 27.645)
+material = SubResource("StandardMaterial3D_kv7re")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="env"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.11031, 7.92601, -1.62716)
+use_collision = true
+size = Vector3(12.7075, 1, 27.645)
+material = SubResource("StandardMaterial3D_kv7re")
+
+[node name="player" type="CharacterBody3D" parent="."]
+script = ExtResource("2_uu7f3")
+acel = 1.01
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_p0hxn")
+
+[node name="head" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58, 0)
+
+[node name="Camera3D" type="Camera3D" parent="player/head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0826313, -0.0556284)
+fov = 100.0
