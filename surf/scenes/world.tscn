@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bbk2nn2wypxwi"]
+[gd_scene load_steps=9 format=3 uid="uid://bbk2nn2wypxwi"]
 
 [ext_resource type="Texture2D" uid="uid://dyja4gh4hiost" path="res://assets/skybox/overcast_soil_puresky_4k.hdr" id="1_1w21t"]
 [ext_resource type="Texture2D" uid="uid://bb3nfdypkc7q6" path="res://assets/textures/xjeA6.png" id="2_q0qig"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_uu7f3"]
-[ext_resource type="Script" path="res://scenes/character_body_3d.gd" id="4_vjgna"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_umk8c"]
 panorama = ExtResource("1_1w21t")
@@ -21,7 +20,7 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kv7re"]
 albedo_texture = ExtResource("2_q0qig")
 metallic = 1.0
-uv1_scale = Vector3(1, -110.845, 1)
+uv1_scale = Vector3(93.465, -154.25, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p0hxn"]
 
@@ -39,9 +38,9 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="env"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 667.432, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1112.41, -0.5, -77.0485)
 use_collision = true
-size = Vector3(1374.86, 1, 40)
+size = Vector3(5895.48, 1, 2287.91)
 material = SubResource("StandardMaterial3D_kv7re")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="env"]
@@ -73,8 +72,20 @@ shape = SubResource("CapsuleShape3D_p0hxn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58, 0)
 
 [node name="Camera3D" type="Camera3D" parent="player/head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0826313, -0.0556284)
+transform = Transform3D(1, 0, 0, 0, 0.940881, 0.338738, 0, -0.338738, 0.940881, 0, 1.79694, -0.0556284)
 fov = 100.0
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-script = ExtResource("4_vjgna")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(39.59, 0)
+scale = Vector2(12.185, 12.185)
+transform = Transform2D(12.185, 0, 0, 12.185, 39.59, 0)
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 43.2015
+offset_top = 0.328273
+offset_right = 263.201
+offset_bottom = 144.328
+scale = Vector2(0.254849, 0.254849)
+text = "3
+"

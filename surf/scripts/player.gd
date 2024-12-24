@@ -1,7 +1,7 @@
 extends CharacterBody3D
-
+@onready var label: Label = $"../CanvasLayer/Label"
 @onready var head: Node3D = $head
-@export var speed := 50.0
+@export var speed := 20.0
 @export var sprint_speed := 10.0
 const walking_speed := 5.0
 @export var jump_velocity := 10
@@ -9,7 +9,7 @@ const mouse_sens := 0.1
 var lerp_speed := 9.0
 const friction_offset := 10
 var sprinting := false
-@export var acel := 5
+@export var acel := 10
 var acel_vect := Vector3.ZERO
 @export var friction_rate := 2
 var direction := Vector3.ZERO
@@ -32,6 +32,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	var look_dir = head.get_global_transform().basis
+	label.text = str(int(velocity.length()))
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 
@@ -67,7 +68,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				accelerate(direction, delta, speed)
 		else:
-			accelerate(direction, delta, speed * 1.2)	
+			air_accelerate(direction, delta, speed)	
 			#velocity.x = lerp(velocity.x, direction.x * speed, acel * delta)
 			#velocity.z = lerp(velocity.z, direction.z * speed, acel * delta)
 	else:
@@ -91,11 +92,34 @@ func accelerate(input_dir : Vector3, delta, max_vel):
 		accel_Vel = max_vel - proj_vel
 	velocity += input_dir * accel_Vel
 	if velocity.length() > max_vel:
-		velocity = velocity.normalized() * max_vel
-	print("Velocity: ", velocity, ", Speed: ", velocity.length())
+		velocity = velocity.move_toward(velocity.normalized() * max_vel, 0.1 * delta)
+	print(" Speed: ", velocity.length(), "acceleration: ", accel_Vel)
 
-	#print("velocity forward = ", velocity.y)
+
+func air_accelerate(input_dir : Vector3, delta, max_vel):
+	#velocity = velocity.move_toward(input_dir * speed, acel * delta * 50)
+	input_dir = input_dir.normalized()
+	var proj_vel : float = velocity.dot(input_dir)
+	var accel_Vel : float = acel * delta * 0.5
+	if proj_vel + accel_Vel < max_vel:
+		velocity += input_dir * accel_Vel
+	#velocity = velocity.lerp(input_dir * velocity.length(), delta * 0.1)
+	#var alignment_boost = max(0, input_dir.dot(velocity.normalized())) * 0.5
+	#accel_Vel += alignment_boost * acel * delta
+	accel_Vel += acel * delta
+	#if proj_vel + accel_Vel > max_vel:
+		#accel_Vel = max_vel - proj_vel
+	#velocity += input_dir * accel_Vel
+	#velocity.x += input_dir.x * (accel_Vel * 10)
+	#velocity.z += input_dir.z * (accel_Vel * 10)
+	#velocity = Vector3(velocity.x + (input_dir.x * accel_Vel * 3), velocity.y, velocity.z + (input_dir.z * accel_Vel * 3))
+	#velocity = input_dir * ((accel_Vel + velocity.length()))
+	#velocity = velocity.move_toward(input_dir * (accel_Vel + velocity.length()), acel)
+	#if velocity.length() > max_vel:
+		#velocity = velocity.normalized() * (velocity.length() - 0.1)
+	#var print_shit : String(" Speed: ", velocity.length(), "acceleration: ", accel_Vel)
+	#print("ve		locity forward = ", velocity.y)
 
 func friction(friction_offset: float, delta: float) -> void:
-	velocity = velocity.move_toward(Vector3.ZERO, friction_offset * delta * 10)
+	velocity = velocity.move_toward(Vector3.ZERO, friction_offset * delta * 14)
 	#func friction
