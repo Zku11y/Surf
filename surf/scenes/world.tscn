@@ -82,10 +82,10 @@ transform = Transform2D(12.185, 0, 0, 12.185, 39.59, 0)
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 texture_filter = 1
-offset_left = 43.2015
-offset_top = 0.328273
-offset_right = 263.201
-offset_bottom = 144.328
-scale = Vector2(0.254849, 0.254849)
+offset_left = 73.0743
+offset_top = 39.3106
+offset_right = 293.074
+offset_bottom = 183.311
+scale = Vector2(0.261666, 0.261666)
 text = "3
 "
